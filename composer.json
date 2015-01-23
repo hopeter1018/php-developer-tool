@@ -1,0 +1,22 @@
+{
+    "name": "hopeter1018/developer-tool",
+    "description": "A set of tools to do developer tasks for myself",
+    "keywords": [],
+	"version": "0.0.1-dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Ho",
+            "email": "hokwaichi@gmail.com",
+            "role": "Developer"
+        }
+	],
+    "require": {
+        "doctrine/cache": "1.*"
+	},
+    "autoload": {
+        "psr-4": {
+            "Hopeter1018\\BackgroundProcess\\": "src"
+        }
+    }
+}
