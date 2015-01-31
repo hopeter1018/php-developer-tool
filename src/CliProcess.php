@@ -8,6 +8,9 @@
 
 namespace Hopeter1018\DeveloperTool;
 
+use Hopeter1018\Framework\SystemPath;
+use Hopeter1018\DoctrineExtension\PathHelper;
+
 /**
  * Description of CliProcess
  *
@@ -30,7 +33,7 @@ namespace Hopeter1018\DeveloperTool;
 final class CliProcess
 {
 
-    private static $commandList = array(
+    private static $commandList = array (
         1 => "Gen doctrine",
         2 => "Gen Phar",
         3 => "composer update --dev",
@@ -40,14 +43,14 @@ final class CliProcess
 
     private static function execAndPrint($cmd)
     {
-        $output = array();
+        $output = array ();
         exec($cmd, $output);
         echo implode("\r\n", $output), "\r\n\r\n";
     }
 
     public static function start($init = true)
     {
-        if (! APP_IS_DEV or PHP_SAPI !== 'cli' or $GLOBALS['argv'][0] !== 'bootstrap.php') {
+        if (!APP_IS_DEV or PHP_SAPI !== 'cli' or $GLOBALS['argv'][0] !== 'bootstrap.php') {
             return;
         }
 
@@ -78,11 +81,10 @@ REGISTER;
 
         echo "Selected {$number}\r\n";
         $continue = true;
-        switch ($number)
-        {
+        switch ($number) {
             case 1:
                 $doctrineExe = 'CALL "wcms/vendor/bin/doctrine.php.bat" ';
-                $genBase = APP_WCMS_FOLDER . APP_WORKBENCH_FOLDER. \Zms5Library\Framework\SystemPath::WB_APP_GEN_DOCTRINE;
+                $genBase = APP_WCMS_FOLDER . APP_WORKBENCH_FOLDER . SystemPath::WB_APP_GEN_DOCTRINE;
 
                 echo "Before cleanup\r\n";
                 static::doctrineCleanup();
@@ -91,7 +93,8 @@ REGISTER;
                 static::execAndPrint("{$doctrineExe}orm:convert-mapping --force --from-database yaml {$genBase}yaml/");
                 echo "Before modify yaml\r\n";
                 static::doctrineModifyYaml();
-                static::execAndPrint("{$doctrineExe}orm:generate-entities --extend=\"Zms5Library\DoctrineExtension\BaseEntity\""
+                ;
+                static::execAndPrint("{$doctrineExe}orm:generate-entities --extend=\"" . \Hopeter1018\DoctrineExtension\BaseEntity::className() . "\""
                     . " --generate-annotations=true --generate-methods=true --regenerate-entities=true"
                     . " {$genBase}Entities/");
                 static::execAndPrint("composer dumpautoload");
@@ -150,12 +153,12 @@ REGISTER;
     /**
      * Cleanup the doctrine-generated folder for next generation
      * 
-     * @see \Zms5Library\DoctrineExtension\PathHelper::cleanUp
+     * @see PathHelper::cleanUp
      * @return boolean
      */
     public static function doctrineCleanup()
     {
-        \Zms5Library\DoctrineExtension\PathHelper::cleanUp();
+        PathHelper::cleanUp();
     }
 
     /**

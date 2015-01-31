@@ -16,7 +16,7 @@
 	},
     "autoload": {
         "psr-4": {
-            "Hopeter1018\\BackgroundProcess\\": "src"
+            "Hopeter1018\\DeveloperTool\\": "src"
         }
     }
 }

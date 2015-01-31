@@ -8,6 +8,10 @@
 
 namespace Hopeter1018\DeveloperTool;
 
+use Hopeter1018\DoctrineExtension\PathHelper;
+use Hopeter1018\Framework\SystemPath;
+use Hopeter1018\DoctrineExtension\Connection;
+
 /**
  * Description of DoctrineProcess
  *
@@ -24,7 +28,7 @@ final class CliProcessForDoctrine
      */
     public static function modifyYaml()
     {
-        $files = glob(\Zms5Library\DoctrineExtension\PathHelper::getYamlRoot('*'));
+        $files = glob(PathHelper::getYamlRoot('*'));
         foreach ($files as $file) {
             $className = pathinfo(pathinfo($file, PATHINFO_FILENAME), PATHINFO_FILENAME);
             if (!strstr($content = file_get_contents($file), 'repositoryClass: ')) {
@@ -96,11 +100,11 @@ final class CliProcessForDoctrine
      */
     public static function generateHints()
     {
-        $entityManager = \Zms5Library\DoctrineExtension\Connection::em();
+        $entityManager = Connection::em();
         $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
         $cmf->setEntityManager($entityManager);
         $metadata = $cmf->getAllMetadata();
-        $netbeansHint = \Zms5Library\Framework\SystemPath::netbeansHintPath();
+        $netbeansHint = SystemPath::netbeansHintPath();
         ! is_dir($netbeansHint) and mkdir($netbeansHint, 0777, true);
 echo $netbeansHint, "\r\n\r\n";
         static::removeOldFiles($netbeansHint);
