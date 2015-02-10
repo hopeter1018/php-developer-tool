@@ -175,7 +175,7 @@ CONTENT
 /**
  *{$aliasMethodHints}
  */
-class {$entity->name}Alias extends Zms5\Common\DoctrineAlias { }
+class {$entity->name}Alias extends Hopeter1018\DoctrineExtension\Alias { }
 
 PHP;
     }

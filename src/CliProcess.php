@@ -20,7 +20,7 @@ use Hopeter1018\DoctrineExtension\PathHelper;
  * <li>v- = vendor</li>
  * </ul>
  * 
- * zms-install
+ * sys-install
  * d-cleanup
  * d-yaml
  * d-alias
@@ -61,7 +61,7 @@ final class CliProcess
             echo <<<REGISTER
 ==============================
 =
-= Welcome to ZMS 5 cli
+= Welcome to cli
 =
 ==============================
  1.) Gen doctrine
@@ -72,7 +72,7 @@ final class CliProcess
  6.) doctrine re-generate hints
  7.) composer dump-autoload --optimize
 
- 9.) ZMS install (todo)
+ 9.) System install (todo)
  0.) Exit
 
 REGISTER;
@@ -143,7 +143,7 @@ REGISTER;
      * @todo
      * @return boolean
      */
-    public static function zmsInstall()
+    public static function sysInstall()
     {
         
     }

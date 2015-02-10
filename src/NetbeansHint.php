@@ -32,8 +32,8 @@ PROP;
     /**
      * Sample:
      * <ul>
-     * <li>\Zms5\DeveloperTools\NetbeansHintingGenerator::jsonToClasses($data, dirname(__CLASS__));
-     * <li>\Zms5\DeveloperTools\NetbeansHintingGenerator::jsonToClasses($data, 'Frontend\Abc');
+     * <li>\Hopeter1018\DeveloperTool\NetbeansHint::jsonToClasses($data, dirname(__CLASS__));
+     * <li>\Hopeter1018\DeveloperTool\NetbeansHint::jsonToClasses($data, 'Frontend\Abc');
      * </ul>
      * @param type $data
      * @param type $className
