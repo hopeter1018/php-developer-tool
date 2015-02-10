@@ -83,7 +83,7 @@ REGISTER;
         $continue = true;
         switch ($number) {
             case 1:
-                $doctrineExe = 'CALL "wcms/vendor/bin/doctrine.php.bat" ';
+                $doctrineExe = 'CALL "' . APP_WCMS_FOLDER . 'vendor/bin/doctrine.php.bat" ';
                 $genBase = APP_WCMS_FOLDER . APP_WORKBENCH_FOLDER . SystemPath::WB_APP_GEN_DOCTRINE;
 
                 echo "Before cleanup\r\n";
