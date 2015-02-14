@@ -36,9 +36,9 @@ PROP;
      * <li>\Hopeter1018\DeveloperTool\NetbeansHint::jsonToClasses($data, 'Frontend\Abc');
      * </ul>
      * @param type $data
-     * @param type $className
+     * @param string|null $className
      */
-    public static function jsonToClasses($data, $className)
+    public static function jsonToClasses($data, $className = null)
     {
         $base = APP_SYSTEM_STORAGE . "netbeanshinting/jsonPosted/" . str_replace("\\", "/", $className);
         ! is_dir(dirname($base)) and mkdir(dirname($base), 0777, true);
