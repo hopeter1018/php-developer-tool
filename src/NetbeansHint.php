@@ -40,6 +40,11 @@ PROP;
      */
     public static function jsonToClasses($data, $className = null)
     {
+        if ($className == null) {
+            $dbbt = debug_backtrace(2);
+            \Hopeter1018\Helper\HttpResponse::addMessageDev($dbbt[1], 'dbbt');
+            $className = $dbbt[1]['class'] . '\\' . $dbbt[1]['function'];
+        }
         $base = APP_SYSTEM_STORAGE . "netbeanshinting/jsonPosted/" . str_replace("\\", "/", $className);
         ! is_dir(dirname($base)) and mkdir(dirname($base), 0777, true);
         is_file($base . ".php") and unlink($base . ".php");
@@ -59,6 +64,7 @@ die('Netbean hintings');
         $ns = substr($className, 0, strrpos($className, '\\'));
         $class = substr($className, strrpos($className, '\\') + 1);
         $subClasses = array();
+        \Hopeter1018\Helper\HttpResponse::addMessageDev('\\NbHints\\' . $ns, 'new-hint-class');
         $properties = array(
             <<<PHP
 
