@@ -81,6 +81,10 @@ namespace NbHints\\{$ns} {
 PHP
         );
         foreach($data as $key => $value) {
+            if (is_numeric($key)) {
+                continue;
+            }
+
             if (is_array($value))
             {
                 $type = gettype($value[0]);

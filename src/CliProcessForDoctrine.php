@@ -83,9 +83,11 @@ final class CliProcessForDoctrine
         $fileDeletedCount = 0;
         $fileSys = new \Symfony\Component\Filesystem\Filesystem;
         foreach ($allOldFiles as $file) {
-            $fileSys->remove($file);
-            $fileSys->remove(dirname($file));
-            $fileDeletedCount ++;
+            if (basename($file) !== "README") {
+                $fileSys->remove($file);
+                $fileSys->remove(dirname($file));
+                $fileDeletedCount ++;
+            }
         }
         echo "Deleted {$fileDeletedCount} old File(s).<br />";
     }
@@ -106,7 +108,7 @@ final class CliProcessForDoctrine
         $metadata = $cmf->getAllMetadata();
         $netbeansHint = SystemPath::netbeansHintPath();
         ! is_dir($netbeansHint) and mkdir($netbeansHint, 0777, true);
-echo $netbeansHint, "\r\n\r\n";
+//echo $netbeansHint, "\r\n\r\n";
         static::removeOldFiles($netbeansHint);
 
         $fileCount = 0;
