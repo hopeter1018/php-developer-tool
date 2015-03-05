@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Hopeter1018\\DeveloperTool;
+namespace Hopeter1018\DeveloperTool;
 
 /**
  * Description of DebugBacktrace
