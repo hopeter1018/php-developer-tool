@@ -137,23 +137,35 @@ final class CliProcessForDoctrine
 //            ! is_dir("{$netbeansHint}Entities") and mkdir("{$netbeansHint}Entities", 0777, true);
 //            ! is_dir("{$netbeansHint}Alias") and mkdir("{$netbeansHint}Alias", 0777, true);
 
-            $nsPhpCode = ($entity->namespace === '') ? '' : "namespace \{$entity->namespace} {";
-            $nsPhpCodeClose = ($entity->namespace === '') ? '' : "}";
-            $contentEntities .= static::getEntityPhp($entity, $nsPhpCode, $nsPhpCodeClose);
+//            $nsPhpCode = ($entity->namespace === '') ? '' : "namespace \{$entity->namespace} {";
+//            $nsPhpCodeClose = ($entity->namespace === '') ? '' : "}";
+//            $contentEntities .= static::getEntityPhp($entity, $nsPhpCode, $nsPhpCodeClose);
             $contentAlias .= static::getAliasPhp($entity, $aliasMethodHints);
+
+            $entityPath = substr(SystemPath::doctrineFilesPath("Entities/{$entity->getName()}.php"), 0, -1);
+            $entityContent = file_get_contents($entityPath);
+            $entityContentNew = substr_replace(
+                $entityContent,
+                static::getEntityStaticMethods($entity) . "\r\n}",
+                strrpos($entityContent, "}"),
+                strlen("}")
+            );
+            file_put_contents($entityPath, $entityContentNew);
+            
+            echo $entityPath, "\r\n\r\n";
         }
 
-        file_put_contents("{$netbeansHint}GeneratedEntities.php", <<<CONTENT
-<?php
-
-/**
- * Auto-generated hinting for Netbeans
- */
-die("This is a hinting helper for Netbeans ");
-
-$contentEntities
-CONTENT
-        );
+//        file_put_contents("{$netbeansHint}GeneratedEntities.php", <<<CONTENT
+//<?php
+//
+///**
+// * Auto-generated hinting for Netbeans
+// */
+//die("This is a hinting helper for Netbeans ");
+//
+//$contentEntities
+//CONTENT
+//        );
         file_put_contents("{$netbeansHint}GeneratedAlias.php", <<<CONTENT
 <?php
 
@@ -195,6 +207,29 @@ PHP;
 
 PHP;
     }
-    
+
+    private static function getEntityStaticMethods($entity)
+    {
+        return <<<PHP
+    /**
+     *
+     * @return \Repository\\{$entity->name}Repository
+     */
+    public static function repo() {
+        return parent::repo();
+    }
+
+    /**
+     *
+     * @param string \$alias
+     * @return \\NetbeanHintsAlias\\{$entity->name}Alias
+     */
+    public static function alias(\$alias = null) {
+        return parent::alias(\$alias);
+    }
+
+PHP;
+    }
+
 // </editor-fold>
 }

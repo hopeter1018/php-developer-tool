@@ -48,6 +48,13 @@ final class CliProcess
         echo implode("\r\n", $output), "\r\n\r\n";
     }
 
+    private static function getDoctrineBin()
+    {
+        return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+            ? 'CALL "' . APP_WCMS_FOLDER . 'vendor/bin/doctrine.php.bat" '
+            : 'php ' . APP_WCMS_FOLDER . 'vendor/bin/';
+    }
+
     public static function start($init = true)
     {
         if (!APP_IS_DEV or PHP_SAPI !== 'cli' or $GLOBALS['argv'][0] !== 'bootstrap.php') {
@@ -83,7 +90,7 @@ REGISTER;
         $continue = true;
         switch ($number) {
             case 1:
-                $doctrineExe = 'CALL "' . APP_WCMS_FOLDER . 'vendor/bin/doctrine.php.bat" ';
+                $doctrineExe = static::getDoctrineBin();
                 $genBase = APP_WCMS_FOLDER . APP_WORKBENCH_FOLDER . SystemPath::WB_APP_GEN_DOCTRINE;
 
                 echo "Before cleanup\r\n";
@@ -93,7 +100,7 @@ REGISTER;
                 static::execAndPrint("{$doctrineExe}orm:convert-mapping --force --from-database yaml {$genBase}yaml/");
                 echo "Before modify yaml\r\n";
                 static::doctrineModifyYaml();
-                ;
+
                 static::execAndPrint("{$doctrineExe}orm:generate-entities --extend=\"" . \Hopeter1018\DoctrineExtension\BaseEntity::className() . "\""
                     . " --generate-annotations=true --generate-methods=true --regenerate-entities=true"
                     . " {$genBase}Entities/");
