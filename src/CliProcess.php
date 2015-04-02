@@ -10,6 +10,8 @@ namespace Hopeter1018\DeveloperTool;
 
 use Hopeter1018\Framework\SystemPath;
 use Hopeter1018\DoctrineExtension\PathHelper;
+use Hopeter1018\System\SchemaMaintenance;
+use Hopeter1018\DoctrineExtension\BaseEntity;
 
 /**
  * Description of CliProcess
@@ -78,6 +80,7 @@ final class CliProcess
  5.) composer & bower update
  6.) doctrine re-generate hints
  7.) composer dump-autoload --optimize
+ 8.) SchemaMaintenance
 
  9.) System install (todo)
  0.) Exit
@@ -101,7 +104,7 @@ REGISTER;
                 echo "Before modify yaml\r\n";
                 static::doctrineModifyYaml();
 
-                static::execAndPrint("{$doctrineExe}orm:generate-entities --extend=\"" . \Hopeter1018\DoctrineExtension\BaseEntity::className() . "\""
+                static::execAndPrint("{$doctrineExe}orm:generate-entities --extend=\"" . BaseEntity::className() . "\""
                     . " --generate-annotations=true --generate-methods=true --regenerate-entities=true"
                     . " {$genBase}Entities/");
                 static::execAndPrint("composer dumpautoload");
@@ -132,12 +135,15 @@ REGISTER;
             case 7:
                 static::execAndPrint("composer dump-autoload --optimize");
                 break;
+            case 8:
+                SchemaMaintenance::create();
             default:
                 echo "\r\nBye\r\n";
                 $continue = false;
                 break;
         }
 
+        $continue = false;
         if ($continue) {
             echo "\r\n\r\n\r\n";
             static::start(false);
