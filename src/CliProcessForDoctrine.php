@@ -40,9 +40,9 @@ final class CliProcessForDoctrine
 
                     $value = $key = null;
                     extract(each($manyToOne['joinColumns']));
-                    $toAddOneToMany[ $manyToOne['targetEntity'] ][ "" . lcfirst(substr($tblName, 2)) ] = array(
+                    $toAddOneToMany[ $manyToOne['targetEntity'] ][ "" . lcfirst(substr($tblName, 0)) ] = array(
                         "targetEntity" => $tblName,
-                        "mappedBy" => lcfirst(substr($manyToOne['targetEntity'], 2)),
+                        "mappedBy" => lcfirst(substr($manyToOne['targetEntity'], 0)),
                         "joinColumns" => array(
                             $value['referencedColumnName'] => array(
                                 "referencedColumnName" => $key,
