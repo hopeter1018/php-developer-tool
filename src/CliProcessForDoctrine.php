@@ -412,7 +412,7 @@ PHP;
     /**
      *
      * @param string \$alias
-     * @return \\NetbeanHintsAlias\\{$entity->name}Alias
+     * @return \\NbHintsAlias\\{$entity->name}Alias
      */
     public static function alias(\$alias = null) {
         return parent::alias(\$alias);
