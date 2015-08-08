@@ -49,24 +49,28 @@ final class ComposerVendor
     }
     private static function pharEnd(Phar $phar, $buildGz)
     {
-        $phar->compress($buildGz ? Phar::GZ : Phar::NONE);
-        $phar->convertToData(Phar::ZIP);
+        if ($buildGz) {
+            $phar->compress(PHAR::GZ);
+        }
+//        $phar->convertToData(Phar::ZIP);
         $phar->stopBuffering();
+
         ini_set("phar.readonly", 1);
         return $phar;
     }
 
     /**
      * Build Phar
+     * @throws \Exception
      * @param boolean $buildGz
      */
     public static function buildPharWithWorkbench($buildGz = false)
     {
         $phar = static::pharStart('phVendorWorkbench');
-        $phar->buildFromDirectory(APP_ROOT, '/\/' . APP_WCMS_FOLDER . '\/(vendor|workbench)+\//');
+        $phar->buildFromDirectory(APP_ROOT, '/\/' . preg_quote(APP_WCMS_FOLDER, '/') . '(vendor|workbench)+\//');
         static::pharEnd($phar, $buildGz);
 
-        echo "Built phVendorWorkbench.phar success.\r\n";
+        echo "Built success on " . date('Y-m-d H:i:s') . " @ {$phar->getPath()}.\r\n";
     }
 
     /**
